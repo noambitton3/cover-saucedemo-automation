@@ -57,7 +57,18 @@ export class InventoryPage {
   }
 
   getItemByIndex(index: number) {
-    const item = this.items.nth(index);
+    return this.getItemDetails(this.items.nth(index));
+  }
+
+  getItemByName(name: string) {
+    return this.getItemDetails(this.getItem(name));
+  }
+
+  getItemButton(name: string): Locator {
+    return this.getItem(name).getByRole('button');
+  }
+
+  private getItemDetails(item: Locator) {
     return {
       name: item.getByTestId('inventory-item-name'),
       description: item.getByTestId('inventory-item-desc'),
