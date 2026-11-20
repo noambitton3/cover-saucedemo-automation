@@ -28,3 +28,9 @@ export const ErrorMessages = {
   lastNameRequired: 'Error: Last Name is required',
   postalCodeRequired: 'Error: Postal Code is required',
 } as const;
+
+export const products = {
+  backpack: 'Sauce Labs Backpack',
+  bikeLight: 'Sauce Labs Bike Light',
+  boltTShirt: 'Sauce Labs Bolt T-Shirt',
+} as const;
