@@ -10,8 +10,8 @@ export interface CheckoutInfo {
 }
 
 export enum SortOption {
-  NameAZ = 'az',
-  NameZA = 'za',
-  PriceLowHigh = 'lohi',
-  PriceHighLow = 'hilo',
+  NameAtoZ = 'az',
+  NameZtoA = 'za',
+  PriceLowToHigh = 'lohi',
+  PriceHighToLow = 'hilo',
 }
