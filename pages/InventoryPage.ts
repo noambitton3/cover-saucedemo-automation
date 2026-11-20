@@ -55,4 +55,15 @@ export class InventoryPage {
   async openProduct(name: string): Promise<void> {
     await this.itemNames.filter({ hasText: name }).click();
   }
+
+  getItemByIndex(index: number) {
+    const item = this.items.nth(index);
+    return {
+      name: item.getByTestId('inventory-item-name'),
+      description: item.getByTestId('inventory-item-desc'),
+      price: item.getByTestId('inventory-item-price'),
+      image: item.locator('img'),
+      addToCartButton: item.getByRole('button', { name: 'Add to cart' }),
+    };
+  }
 }
