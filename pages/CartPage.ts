@@ -26,8 +26,15 @@ export class CartPage {
     await this.page.goto('/cart.html');
   }
 
-  async getItemNames(): Promise<string[]> {
-    return this.cartItemNames.allTextContents();
+  getItemByName(name: string) {
+    const item = this.cartItems.filter({ hasText: name });
+    return {
+      name: item.getByTestId('inventory-item-name'),
+      description: item.getByTestId('inventory-item-desc'),
+      price: item.getByTestId('inventory-item-price'),
+      quantity: item.getByTestId('item-quantity'),
+      removeButton: item.getByRole('button', { name: 'Remove' }),
+    };
   }
 
   async removeItem(name: string): Promise<void> {
