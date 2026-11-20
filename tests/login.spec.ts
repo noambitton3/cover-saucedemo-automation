@@ -16,8 +16,8 @@ test.describe('Login', () => {
   test('locked out user cannot log in', { tag: '@regression' }, async ({ page, loginPage }) => {
     await loginPage.login(users.lockedOut);
 
-    await expect(loginPage.errorMessage).toHaveText(ErrorMessages.lockedOut);
-    await expect(page).not.toHaveURL(/inventory\.html/);
+    await expect.soft(loginPage.errorMessage).toHaveText(ErrorMessages.lockedOut);
+    await expect.soft(page).not.toHaveURL(/inventory\.html/);
   });
 
   test('invalid credentials show error', { tag: '@regression' }, async ({ loginPage }) => {
