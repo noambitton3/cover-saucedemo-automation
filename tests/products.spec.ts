@@ -32,7 +32,7 @@ test.describe('Products', () => {
         const price = (await firstProduct.price.textContent()) ?? '';
 
         await firstProduct.name.click();
-        await expect(page).toHaveURL(/inventory-item\.html/);
+        await expect(productPage.backToProductsButton).toBeVisible();
 
         await expect.soft(productPage.productName).toHaveText(name);
         await expect.soft(productPage.productDescription).toHaveText(description);
