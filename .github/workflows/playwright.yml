@@ -68,12 +68,10 @@ jobs:
 
       - name: Generate Allure report with history
         if: always() && github.ref == 'refs/heads/main'
-        uses: simple-elf/allure-report-action@master
-        with:
-          allure_results: allure-results
-          gh_pages: gh-pages
-          allure_history: allure-history
-          keep_reports: 20
+        run: |
+          mkdir -p allure-results
+          if [ -d gh-pages/history ]; then cp -r gh-pages/history allure-results/history; fi
+          npx allure generate allure-results -o allure-report --clean
 
       - name: Publish Allure report to GitHub Pages
         if: always() && github.ref == 'refs/heads/main'
@@ -81,4 +79,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: allure-history
+          publish_dir: allure-report
