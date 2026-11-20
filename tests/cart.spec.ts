@@ -65,4 +65,35 @@ test.describe('Cart', () => {
     await expect.soft(cartPage.cartItems).toHaveCount(0);
     await expect.soft(cartPage.header.cartBadge).toBeHidden();
   });
+
+  test('cart content is kept after page reload', { tag: '@regression' }, async ({ page, inventoryPage, cartPage }) => {
+    await inventoryPage.addToCart(products.backpack);
+    await inventoryPage.header.goToCart();
+    await expect(cartPage.pageTitle).toHaveText('Your Cart');
+
+    await page.reload();
+
+    await expect.soft(cartPage.cartItemNames).toHaveText([products.backpack]);
+    await expect.soft(cartPage.header.cartBadge).toHaveText('1');
+  });
+    
+  test('cart navigation: continue shopping and checkout', { tag: '@regression' }, async ({ inventoryPage, cartPage, checkoutInfoPage }) => {
+    await inventoryPage.addToCart(products.backpack);
+    await inventoryPage.header.goToCart();
+    await expect(cartPage.pageTitle).toHaveText('Your Cart');
+
+    await test.step('continue shopping returns to products page and keeps the cart', async () => {
+      await cartPage.continueShopping();
+
+      await expect.soft(inventoryPage.title).toHaveText('Products');
+      await expect.soft(inventoryPage.header.cartBadge).toHaveText('1');
+    });
+
+    await test.step('checkout opens the checkout information form', async () => {
+      await inventoryPage.header.goToCart();
+      await cartPage.goToCheckout();
+
+      await expect(checkoutInfoPage.firstNameInput).toBeVisible();
+    });
+  });
 });
