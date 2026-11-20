@@ -64,10 +64,6 @@ export class InventoryPage {
     return this.getItemDetails(this.getItem(name));
   }
 
-  getItemButton(name: string): Locator {
-    return this.getItem(name).getByRole('button');
-  }
-
   private getItemDetails(item: Locator) {
     return {
       name: item.getByTestId('inventory-item-name'),
@@ -75,6 +71,7 @@ export class InventoryPage {
       price: item.getByTestId('inventory-item-price'),
       image: item.locator('img'),
       addToCartButton: item.getByRole('button', { name: 'Add to cart' }),
+      removeButton: item.getByRole('button', { name: 'Remove' }),
     };
   }
 }
