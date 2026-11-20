@@ -32,6 +32,7 @@ test.describe('Products', () => {
         const price = (await firstProduct.price.textContent()) ?? '';
 
         await firstProduct.name.click();
+        await expect(page).toHaveURL(/inventory-item\.html/);
 
         await expect.soft(productPage.productName).toHaveText(name);
         await expect.soft(productPage.productDescription).toHaveText(description);
@@ -42,7 +43,7 @@ test.describe('Products', () => {
         await productPage.backToProducts();
 
         await expect(page).toHaveURL(/inventory\.html/);
-        expect(await inventoryPage.getItemNames()).toEqual(namesBefore);
+        await expect(inventoryPage.itemNames).toHaveText(namesBefore);
       });
     });
 
