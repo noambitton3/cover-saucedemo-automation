@@ -32,7 +32,6 @@ export class CartPage {
       name: item.getByTestId('inventory-item-name'),
       description: item.getByTestId('inventory-item-desc'),
       price: item.getByTestId('inventory-item-price'),
-      quantity: item.getByTestId('item-quantity'),
       removeButton: item.getByRole('button', { name: 'Remove' }),
     };
   }
