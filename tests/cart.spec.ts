@@ -63,7 +63,7 @@ test.describe('Cart', () => {
 
     await inventoryPage.header.goToCart();
     await expect(cartPage.pageTitle).toHaveText('Your Cart');
-    await expect.soft(cartPage.cartItemNames).toHaveText(selected);
+    await expect(cartPage.cartItemNames).toHaveText(selected);
   });
 
   test('cart content is kept after page reload', { tag: '@regression' }, async ({ page, inventoryPage, cartPage }) => {
