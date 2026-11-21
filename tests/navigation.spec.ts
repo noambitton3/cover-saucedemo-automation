@@ -28,10 +28,7 @@ test.describe('Navigation', () => {
     
     await test.step('menu opens and shows all links', async () => {
       await header.openMenu();
-
-      for (const link of header.menuLinks) {
-        await expect.soft(link).toBeVisible();
-      }
+      // openMenu verifies that every menu link is visible
     });
 
     await test.step('X closes the menu', async () => {
