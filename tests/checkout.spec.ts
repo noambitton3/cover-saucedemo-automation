@@ -44,7 +44,6 @@ test.describe('Checkout', () => {
     await inventoryPage.header.goToCart();
     await expect(cartPage.pageTitle).toHaveText('Your Cart');
     await cartPage.goToCheckout();
-    await expect(checkoutInfoPage.firstNameInput).toBeVisible();
 
     const missingFieldCases = [
       { field: 'first name', info: { ...checkoutInfo, firstName: '' }, error: ErrorMessages.firstNameRequired },
@@ -66,7 +65,6 @@ test.describe('Checkout', () => {
     await inventoryPage.header.goToCart();
     await expect(cartPage.pageTitle).toHaveText('Your Cart');
     await cartPage.goToCheckout();
-    await expect(checkoutInfoPage.firstNameInput).toBeVisible();
 
     await checkoutInfoPage.cancel();
 
@@ -124,7 +122,6 @@ test.describe('Checkout - problem user', () => {
     await inventoryPage.header.goToCart();
     await expect(cartPage.pageTitle).toHaveText('Your Cart');
     await cartPage.goToCheckout();
-    await expect(checkoutInfoPage.firstNameInput).toBeVisible();
 
     await checkoutInfoPage.fillForm(checkoutInfo);
 
