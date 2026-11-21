@@ -38,16 +38,12 @@ export class InventoryPage {
     return texts.map((text) => parseFloat(text.replace('$', '')));
   }
 
-  getItem(name: string): Locator {
-    return this.items.filter({ hasText: name });
-  }
-
   async addToCart(name: string): Promise<void> {
-    await this.getItem(name).getByRole('button', { name: 'Add to cart' }).click();
+    await this.getItemByName(name).addToCartButton.click();
   }
 
   async removeFromCart(name: string): Promise<void> {
-    await this.getItem(name).getByRole('button', { name: 'Remove' }).click();
+    await this.getItemByName(name).removeButton.click();
   }
 
   getItemByIndex(index: number) {
@@ -55,7 +51,7 @@ export class InventoryPage {
   }
 
   getItemByName(name: string) {
-    return this.getItemDetails(this.getItem(name));
+    return this.getItemDetails(this.items.filter({ hasText: name }));
   }
 
   private getItemDetails(item: Locator) {
@@ -63,7 +59,7 @@ export class InventoryPage {
       name: item.getByTestId('inventory-item-name'),
       description: item.getByTestId('inventory-item-desc'),
       price: item.getByTestId('inventory-item-price'),
-      image: item.locator('img'),
+      image: item.getByRole('img'),
       addToCartButton: item.getByRole('button', { name: 'Add to cart' }),
       removeButton: item.getByRole('button', { name: 'Remove' }),
     };

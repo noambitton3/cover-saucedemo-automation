@@ -31,7 +31,7 @@ export class CartPage {
   }
 
   async removeItem(name: string): Promise<void> {
-    await this.cartItems.filter({ hasText: name }).getByRole('button', { name: 'Remove' }).click();
+    await this.getItemByName(name).removeButton.click();
   }
 
   async continueShopping(): Promise<void> {
