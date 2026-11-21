@@ -2,8 +2,10 @@ import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
 import path from 'path';
 
-// טוען את המשתנים מקובץ .env
-dotenv.config({ path: path.resolve(__dirname, '.env') });
+// Load env vars from .env; any missing values are taken from .env.example.
+// Existing env vars (e.g. CI secrets) are never overridden.
+dotenv.config({ path: path.resolve(__dirname, '.env'), quiet: true });
+dotenv.config({ path: path.resolve(__dirname, '.env.example'), quiet: true });
 
 export default defineConfig({
   testDir: './tests',
