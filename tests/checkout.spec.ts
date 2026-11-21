@@ -109,3 +109,25 @@ test.describe('Checkout', () => {
     await expect(inventoryPage.header.cartBadge).toHaveText('1');
   });
 });
+
+test.describe('Checkout - problem user', () => {
+  test.beforeEach(async ({ loginPage, inventoryPage }) => {
+    await loginPage.goto();
+    await loginPage.login(users.problem);
+    await expect(inventoryPage.items.first()).toBeVisible();
+  });
+
+  test('last name field does not keep the typed value (known bug)', { tag: '@regression' }, async ({ inventoryPage, cartPage, checkoutInfoPage }) => {
+    test.fail(true, 'Known bug: last name input does not keep its value for problem_user');
+
+    await inventoryPage.addToCart(products.backpack);
+    await inventoryPage.header.goToCart();
+    await expect(cartPage.pageTitle).toHaveText('Your Cart');
+    await cartPage.goToCheckout();
+    await expect(checkoutInfoPage.firstNameInput).toBeVisible();
+
+    await checkoutInfoPage.fillForm(checkoutInfo);
+
+    await expect(checkoutInfoPage.lastNameInput).toHaveValue(checkoutInfo.lastName);
+  });
+});
