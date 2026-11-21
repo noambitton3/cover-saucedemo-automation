@@ -7,6 +7,7 @@ import { CheckoutInfoPage } from '../pages/CheckoutInfoPage';
 import { CheckoutSummaryPage } from '../pages/CheckoutSummaryPage';
 import { CheckoutCompletePage } from '../pages/CheckoutCompletePage';
 
+/** Page objects that tests can receive as parameters. */
 type Pages = {
   loginPage: LoginPage;
   inventoryPage: InventoryPage;
@@ -17,6 +18,10 @@ type Pages = {
   checkoutCompletePage: CheckoutCompletePage;
 };
 
+/**
+ * Custom test: extends Playwright's test with ready-made page objects.
+ * Each test gets new instances built on its own page, so tests stay independent.
+ */
 export const test = base.extend<Pages>({
   loginPage: async ({ page }, use) => {
     await use(new LoginPage(page));

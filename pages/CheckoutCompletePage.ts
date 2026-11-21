@@ -1,6 +1,7 @@
 import { Page, Locator } from '@playwright/test';
 import { HeaderComponent } from '../components/HeaderComponent';
 
+/** Order confirmation page, shown after Finish. */
 export class CheckoutCompletePage {
   readonly page: Page;
   readonly header: HeaderComponent;

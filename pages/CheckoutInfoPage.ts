@@ -1,6 +1,7 @@
 import { Page, Locator } from '@playwright/test';
 import { CheckoutInfo } from '../types';
 
+/** Checkout step 1: customer information form. */
 export class CheckoutInfoPage {
   readonly page: Page;
   readonly firstNameInput: Locator;

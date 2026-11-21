@@ -1,6 +1,7 @@
 import { Page, Locator } from '@playwright/test';
 import { User } from '../types';
 
+/** Login page: username, password, login button and error message. */
 export class LoginPage {
   readonly page: Page;
   readonly usernameInput: Locator;

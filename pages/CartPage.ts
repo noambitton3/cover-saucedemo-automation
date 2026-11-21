@@ -1,6 +1,8 @@
 import { Page, Locator } from '@playwright/test';
 import { HeaderComponent } from '../components/HeaderComponent';
+import { CartItem } from '../types';
 
+/** Cart page: the products in the cart, remove, continue shopping and checkout. */
 export class CartPage {
   readonly page: Page;
   readonly header: HeaderComponent;
@@ -20,7 +22,8 @@ export class CartPage {
     this.checkoutButton = page.getByTestId('checkout');
   }
 
-  getItemByName(name: string) {
+  /** Returns the locators inside the cart row of the product with the given name. */
+  getItemByName(name: string): CartItem {
     const item = this.cartItems.filter({ hasText: name });
     return {
       name: item.getByTestId('inventory-item-name'),

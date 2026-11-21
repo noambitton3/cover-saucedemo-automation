@@ -1,6 +1,7 @@
 import { Page, Locator } from '@playwright/test';
 import { HeaderComponent } from '../components/HeaderComponent';
 
+/** Product details page: a single product, add to cart and back to products. */
 export class ProductPage {
   readonly page: Page;
   readonly header: HeaderComponent;

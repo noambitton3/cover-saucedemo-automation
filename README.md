@@ -138,7 +138,7 @@ cover-saucedemo-automation/
 │   ├── checkout.spec.ts
 │   └── navigation.spec.ts
 ├── types/
-│   └── index.ts              # Shared TypeScript types (User, CheckoutInfo, SortOption)
+│   └── index.ts              # Shared TypeScript types (User, CheckoutInfo, ProductCard, CartItem, SortOption)
 ├── utils/
 │   └── envReader.ts          # Reads a required environment variable and fails clearly if it is missing
 ├── .env.example              # Environment variables template with default values
@@ -155,7 +155,8 @@ cover-saucedemo-automation/
 - **Readable reports.** `test.step` splits long flows into named steps. `expect.soft` is used for independent checks on the same screen, so one failure doesn't hide the others.
 - **Known bugs.** Bugs found in the site are covered by tests marked with `test.fail()`. They pass while the bug exists and will alert when it is fixed. See the bug list in the [Test Plan](TEST_PLAN.md).
 - **Cross-browser.** Every test runs on Chromium, Firefox and WebKit, and runs in parallel.
-- **Type safety.** TypeScript runs in `strict` mode, and CI runs a type check before the tests.
+- **Type safety.** TypeScript runs in `strict` mode with no `any`. Shared data uses interfaces and an enum from `types/` (`User`, `CheckoutInfo`, `ProductCard`, `CartItem`, `SortOption`), page methods declare their return types, and the users list is checked with `satisfies Record<string, User>`. CI runs a type check before the tests.
+- **Documented code.** Page objects, the header component, fixtures and test data have short JSDoc comments that explain what each part does, and why where it isn't obvious (for example, the retries in the side menu).
 
 ---
 

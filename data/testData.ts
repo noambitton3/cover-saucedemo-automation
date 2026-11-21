@@ -4,6 +4,7 @@ import { CheckoutInfo } from '../types';
 
 const password = getEnv('PASSWORD');
 
+/** Test users. Usernames and the password come from environment variables. */
 export const users = {
   standard: { username: getEnv('STANDARD_USER'), password },
   lockedOut: { username: getEnv('LOCKED_OUT_USER'), password },
@@ -12,12 +13,14 @@ export const users = {
   invalid: { username: 'wrong_user', password: 'wrong_password' },
 } satisfies Record<string, User>;
 
+/** Customer details for the checkout form. */
 export const checkoutInfo: CheckoutInfo = {
   firstName: 'Noam',
   lastName: 'Bitton',
   postalCode: '8122001',
 };
 
+/** Expected error messages, as shown on the site. */
 export const ErrorMessages = {
   usernameRequired: 'Epic sadface: Username is required',
   passwordRequired: 'Epic sadface: Password is required',
@@ -29,6 +32,7 @@ export const ErrorMessages = {
   postalCodeRequired: 'Error: Postal Code is required',
 } as const;
 
+/** Product names used in the tests. */
 export const products = {
   backpack: 'Sauce Labs Backpack',
   bikeLight: 'Sauce Labs Bike Light',

@@ -1,7 +1,8 @@
 import { Page, Locator } from '@playwright/test';
-import { SortOption } from '../types';
+import { SortOption, ProductCard } from '../types';
 import { HeaderComponent } from '../components/HeaderComponent';
 
+/** Products list page (inventory): product cards, sorting and add/remove to cart. */
 export class InventoryPage {
   readonly page: Page;
   readonly header: HeaderComponent;
@@ -33,6 +34,7 @@ export class InventoryPage {
     return this.itemNames.allTextContents();
   }
 
+  /** Returns the prices as numbers, without the "$" sign. */
   async getItemPrices(): Promise<number[]> {
     const texts = await this.itemPrices.allTextContents();
     return texts.map((text) => parseFloat(text.replace('$', '')));
@@ -46,15 +48,18 @@ export class InventoryPage {
     await this.getItemByName(name).removeButton.click();
   }
 
-  getItemByIndex(index: number) {
+  /** Returns the locators of the product card at the given position (0 = first). */
+  getItemByIndex(index: number): ProductCard {
     return this.getItemDetails(this.items.nth(index));
   }
 
-  getItemByName(name: string) {
+  /** Returns the locators of the product card with the given name. */
+  getItemByName(name: string): ProductCard {
     return this.getItemDetails(this.items.filter({ hasText: name }));
   }
 
-  private getItemDetails(item: Locator) {
+  /** Builds the card locators inside a single product, so they don't match other products. */
+  private getItemDetails(item: Locator): ProductCard {
     return {
       name: item.getByTestId('inventory-item-name'),
       description: item.getByTestId('inventory-item-desc'),
