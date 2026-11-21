@@ -206,5 +206,5 @@ Values are loaded in this order:
 ## Future Improvements
 
 - Log in once and reuse the session (`storageState`) to shorten the test runs.
-- Automate more of the bugs documented in the [Test Plan](TEST_PLAN.md). Today 2 of the 17 bugs are covered with `test.fail()`.
+- Automate more of the bugs documented in the [Test Plan](TEST_PLAN.md). Today 2 of the 16 bugs are covered with `test.fail()`.
 - Cover `visual_user` and `error_user` with dedicated tests.
