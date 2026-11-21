@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/fixtures';
-import { users, ErrorMessages } from '../data/testData';
+import { users, products, ErrorMessages } from '../data/testData';
 
 test.describe('Navigation', () => {
   test.beforeEach(async ({ loginPage, inventoryPage }) => {
@@ -50,6 +50,14 @@ test.describe('Navigation', () => {
     await cartPage.header.allItemsLink.click();
 
     await expect(inventoryPage.title).toHaveText('Products');
+  });
+
+  test('reset app state clears the cart badge', { tag: '@regression' }, async ({ inventoryPage }) => {
+    await inventoryPage.addToCart(products.backpack);
+    await expect(inventoryPage.header.cartBadge).toHaveText('1');
+
+    await inventoryPage.header.resetAppState();
+    await expect(inventoryPage.header.cartBadge).toBeHidden();
   });
 });
 
