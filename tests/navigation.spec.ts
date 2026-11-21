@@ -59,6 +59,11 @@ test.describe('Navigation', () => {
     await inventoryPage.header.resetAppState();
     await expect(inventoryPage.header.cartBadge).toBeHidden();
   });
+
+  test('about link points to Sauce Labs website', { tag: '@regression' }, async ({ inventoryPage }) => {
+    await inventoryPage.header.openMenu();
+    await expect(inventoryPage.header.aboutLink).toHaveAttribute('href', 'https://saucelabs.com/');
+  });
 });
 
 test.describe('Navigation - not logged in', () => {
