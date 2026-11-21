@@ -60,4 +60,24 @@ test.describe('Checkout', () => {
       });
     }
   });
+
+  test('summary calculates totals correctly', { tag: '@regression' }, async ({ inventoryPage, cartPage, checkoutInfoPage, checkoutSummaryPage }) => {
+    await inventoryPage.addToCart(products.backpack);
+    await inventoryPage.addToCart(products.bikeLight);
+    await inventoryPage.header.goToCart();
+    await expect(cartPage.pageTitle).toHaveText('Your Cart');
+    await cartPage.goToCheckout();
+    await checkoutInfoPage.fillForm(checkoutInfo);
+    await checkoutInfoPage.clickContinue();
+    await expect(checkoutSummaryPage.summaryItems).toHaveCount(2);
+
+    const prices = await checkoutSummaryPage.getItemPrices();
+    const subtotal = await checkoutSummaryPage.getSubtotal();
+    const tax = await checkoutSummaryPage.getTax();
+    const total = await checkoutSummaryPage.getTotal();
+    const pricesSum = prices.reduce((sum, price) => sum + price, 0);
+
+    expect.soft(subtotal).toBeCloseTo(pricesSum, 2);
+    expect.soft(total).toBeCloseTo(subtotal + tax, 2);
+  });
 });
