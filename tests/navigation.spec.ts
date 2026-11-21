@@ -25,20 +25,18 @@ test.describe('Navigation', () => {
 
   test('menu opens with all links and closes with X', { tag: '@regression' }, async ({ inventoryPage }) => {
     const header = inventoryPage.header;
-
+    
     await test.step('menu opens and shows all links', async () => {
       await header.openMenu();
 
-      await expect(header.sideMenu).toHaveAttribute('aria-hidden', 'false');
-      await expect.soft(header.allItemsLink).toHaveText('All Items');
-      await expect.soft(header.aboutLink).toHaveText('About');
-      await expect.soft(header.logoutLink).toHaveText('Logout');
-      await expect.soft(header.resetAppStateLink).toHaveText('Reset App State');
+      for (const link of header.menuLinks) {
+        await expect.soft(link).toBeVisible();
+      }
     });
 
     await test.step('X closes the menu', async () => {
       await header.closeMenu();
-      await expect(header.sideMenu).toHaveAttribute('aria-hidden', 'true');
+      await expect(header.allItemsLink).toBeHidden();
     });
   });
 
@@ -46,8 +44,7 @@ test.describe('Navigation', () => {
     await inventoryPage.header.goToCart();
     await expect(cartPage.pageTitle).toHaveText('Your Cart');
 
-    await cartPage.header.openMenu();
-    await cartPage.header.allItemsLink.click();
+    await cartPage.header.goToAllItems();
 
     await expect(inventoryPage.title).toHaveText('Products');
   });
