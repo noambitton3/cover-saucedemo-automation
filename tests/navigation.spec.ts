@@ -41,6 +41,16 @@ test.describe('Navigation', () => {
       await expect(header.sideMenu).toHaveAttribute('aria-hidden', 'true');
     });
   });
+
+  test('all items link returns to products page from cart', { tag: '@regression' }, async ({ inventoryPage, cartPage }) => {
+    await inventoryPage.header.goToCart();
+    await expect(cartPage.pageTitle).toHaveText('Your Cart');
+
+    await cartPage.header.openMenu();
+    await cartPage.header.allItemsLink.click();
+
+    await expect(inventoryPage.title).toHaveText('Products');
+  });
 });
 
 test.describe('Navigation - not logged in', () => {
