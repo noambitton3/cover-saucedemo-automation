@@ -61,6 +61,19 @@ test.describe('Checkout', () => {
     }
   });
 
+  test('cancel on information form returns to cart and keeps the product', { tag: '@regression' }, async ({ inventoryPage, cartPage, checkoutInfoPage }) => {
+    await inventoryPage.addToCart(products.backpack);
+    await inventoryPage.header.goToCart();
+    await expect(cartPage.pageTitle).toHaveText('Your Cart');
+    await cartPage.goToCheckout();
+    await expect(checkoutInfoPage.firstNameInput).toBeVisible();
+
+    await checkoutInfoPage.cancel();
+
+    await expect(cartPage.pageTitle).toHaveText('Your Cart');
+    await expect.soft(cartPage.cartItemNames).toHaveText([products.backpack]);
+  });
+
   test('summary calculates totals correctly', { tag: '@regression' }, async ({ inventoryPage, cartPage, checkoutInfoPage, checkoutSummaryPage }) => {
     await inventoryPage.addToCart(products.backpack);
     await inventoryPage.addToCart(products.bikeLight);
