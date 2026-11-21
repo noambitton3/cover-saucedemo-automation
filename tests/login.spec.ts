@@ -13,19 +13,6 @@ test.describe('Login', () => {
     await expect.soft(inventoryPage.title).toHaveText('Products');
   });
 
-  test('locked out user cannot log in', { tag: '@regression' }, async ({ page, loginPage }) => {
-    await loginPage.login(users.lockedOut);
-
-    await expect.soft(loginPage.errorMessage).toHaveText(ErrorMessages.lockedOut);
-    await expect.soft(page).not.toHaveURL(/inventory\.html/);
-  });
-
-  test('invalid credentials show error', { tag: '@regression' }, async ({ loginPage }) => {
-    await loginPage.login(users.invalid);
-
-    await expect(loginPage.errorMessage).toHaveText(ErrorMessages.invalidCredentials);
-  });
-
   test('empty username shows required error', { tag: '@regression' }, async ({ loginPage }) => {
     await loginPage.login({ ...users.standard, username: '' });
 
@@ -36,6 +23,19 @@ test.describe('Login', () => {
     await loginPage.login({ ...users.standard, password: '' });
 
     await expect(loginPage.errorMessage).toHaveText(ErrorMessages.passwordRequired);
+  });
+
+  test('invalid credentials show error', { tag: '@regression' }, async ({ loginPage }) => {
+    await loginPage.login(users.invalid);
+
+    await expect(loginPage.errorMessage).toHaveText(ErrorMessages.invalidCredentials);
+  });
+
+  test('locked out user cannot log in', { tag: '@regression' }, async ({ page, loginPage }) => {
+    await loginPage.login(users.lockedOut);
+
+    await expect.soft(loginPage.errorMessage).toHaveText(ErrorMessages.lockedOut);
+    await expect.soft(page).not.toHaveURL(/inventory\.html/);
   });
 
   test('performance glitch user logs in despite delay', { tag: '@regression' }, async ({ loginPage, inventoryPage }) => {
