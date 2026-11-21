@@ -10,7 +10,7 @@ test.describe('Products', () => {
       await expect(inventoryPage.items.first()).toBeVisible();
     });
 
-    test('happy path: browse products, open details and return to list', { tag: ['@smoke', '@regression'] }, async ({ page, inventoryPage, productPage }) => {
+    test('happy path: browse products, open details, add to cart and return to list', { tag: ['@smoke', '@regression'] }, async ({ inventoryPage, productPage }) => {
       const namesBefore = await inventoryPage.getItemNames();
 
       await test.step('every product shows name, price, image and add to cart button', async () => {
@@ -39,10 +39,18 @@ test.describe('Products', () => {
         await expect.soft(productPage.productPrice).toHaveText(price);
       });
 
-      await test.step('back to products returns to the list in the same order', async () => {
+      await test.step('add to cart from product page updates button and cart badge', async () => {
+        await productPage.addToCart();
+
+        await expect.soft(productPage.removeButton).toBeVisible();
+        await expect.soft(productPage.header.cartBadge).toHaveText('1');
+      });
+
+      await test.step('back to products keeps list order and product status', async () => {
         await productPage.backToProducts();
 
-        await expect(page).toHaveURL(/inventory\.html/);
+        await expect(inventoryPage.title).toHaveText('Products');
+        await expect.soft(inventoryPage.getItemByIndex(0).removeButton).toBeVisible();
         await expect(inventoryPage.itemNames).toHaveText(namesBefore);
       });
     });
