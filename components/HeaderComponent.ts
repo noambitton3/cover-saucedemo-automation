@@ -5,6 +5,7 @@ export class HeaderComponent {
   readonly cartIcon: Locator;
   readonly cartBadge: Locator;
   readonly menuButton: Locator;
+  readonly sideMenu: Locator;
   readonly closeMenuButton: Locator;
   readonly allItemsLink: Locator;
   readonly aboutLink: Locator;
@@ -16,6 +17,7 @@ export class HeaderComponent {
     this.cartIcon = page.getByTestId('shopping-cart-link');
     this.cartBadge = page.getByTestId('shopping-cart-badge');
     this.menuButton = page.getByRole('button', { name: 'Open Menu' });
+    this.sideMenu = page.locator('.bm-menu-wrap');
     this.closeMenuButton = page.getByRole('button', { name: 'Close Menu' });
     this.allItemsLink = page.getByTestId('inventory-sidebar-link');
     this.aboutLink = page.getByTestId('about-sidebar-link');
