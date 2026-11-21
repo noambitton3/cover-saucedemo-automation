@@ -6,7 +6,8 @@
     "test": "playwright test",
     "test:smoke": "playwright test --grep @smoke",
     "typecheck": "tsc",
-    "report": "playwright show-report"
+    "report": "playwright show-report",
+    "postinstall": "playwright install"
   },
   "keywords": [],
   "author": "",
