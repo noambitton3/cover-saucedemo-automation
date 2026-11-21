@@ -5,14 +5,12 @@ export class CheckoutCompletePage {
   readonly page: Page;
   readonly header: HeaderComponent;
   readonly completeMessage: Locator;
-  readonly completeText: Locator;
   readonly backHomeButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.header = new HeaderComponent(page);
     this.completeMessage = page.getByTestId('complete-header');
-    this.completeText = page.getByTestId('complete-text');
     this.backHomeButton = page.getByTestId('back-to-products');
   }
 

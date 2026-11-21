@@ -7,7 +7,6 @@ export class CartPage {
   readonly pageTitle: Locator;
   readonly cartItems: Locator;
   readonly cartItemNames: Locator;
-  readonly cartItemPrices: Locator;
   readonly continueShoppingButton: Locator;
   readonly checkoutButton: Locator;
 
@@ -17,13 +16,8 @@ export class CartPage {
     this.pageTitle = page.getByTestId('title');
     this.cartItems = page.getByTestId('inventory-item');
     this.cartItemNames = page.getByTestId('inventory-item-name');
-    this.cartItemPrices = page.getByTestId('inventory-item-price');
     this.continueShoppingButton = page.getByTestId('continue-shopping');
     this.checkoutButton = page.getByTestId('checkout');
-  }
-
-  async goto(): Promise<void> {
-    await this.page.goto('/cart.html');
   }
 
   getItemByName(name: string) {

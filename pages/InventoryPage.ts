@@ -9,7 +9,6 @@ export class InventoryPage {
   readonly items: Locator;
   readonly itemNames: Locator;
   readonly itemPrices: Locator;
-  readonly itemImages: Locator;
   readonly sortDropdown: Locator;
 
   constructor(page: Page) {
@@ -19,7 +18,6 @@ export class InventoryPage {
     this.items = page.getByTestId('inventory-item');
     this.itemNames = page.getByTestId('inventory-item-name');
     this.itemPrices = page.getByTestId('inventory-item-price');
-    this.itemImages = this.items.locator('img');
     this.sortDropdown = page.getByTestId('product-sort-container');
   }
 
@@ -50,10 +48,6 @@ export class InventoryPage {
 
   async removeFromCart(name: string): Promise<void> {
     await this.getItem(name).getByRole('button', { name: 'Remove' }).click();
-  }
-
-  async openProduct(name: string): Promise<void> {
-    await this.itemNames.filter({ hasText: name }).click();
   }
 
   getItemByIndex(index: number) {
