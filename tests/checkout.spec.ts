@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/fixtures';
-import { users, products, checkoutInfo } from '../data/testData';
+import { users, products, checkoutInfo, ErrorMessages } from '../data/testData';
 
 test.describe('Checkout', () => {
   test.beforeEach(async ({ loginPage, inventoryPage }) => {
@@ -37,5 +37,27 @@ test.describe('Checkout', () => {
       await checkoutCompletePage.backHome();
       await expect(inventoryPage.title).toHaveText('Products');
     });
+  });
+
+  test('missing required fields show the matching error', { tag: '@regression' }, async ({ inventoryPage, cartPage, checkoutInfoPage }) => {
+    await inventoryPage.addToCart(products.backpack);
+    await inventoryPage.header.goToCart();
+    await expect(cartPage.pageTitle).toHaveText('Your Cart');
+    await cartPage.goToCheckout();
+    await expect(checkoutInfoPage.firstNameInput).toBeVisible();
+
+    const missingFieldCases = [
+      { field: 'first name', info: { ...checkoutInfo, firstName: '' }, error: ErrorMessages.firstNameRequired },
+      { field: 'last name', info: { ...checkoutInfo, lastName: '' }, error: ErrorMessages.lastNameRequired },
+      { field: 'postal code', info: { ...checkoutInfo, postalCode: '' }, error: ErrorMessages.postalCodeRequired },
+    ];
+
+    for (const { field, info, error } of missingFieldCases) {
+      await test.step(`missing ${field} shows its error`, async () => {
+        await checkoutInfoPage.fillForm(info);
+        await checkoutInfoPage.clickContinue();
+        await expect.soft(checkoutInfoPage.errorMessage).toHaveText(error);
+      });
+    }
   });
 });
