@@ -3,6 +3,7 @@ import { Page, Locator } from '@playwright/test';
 export class CheckoutSummaryPage {
   readonly page: Page;
   readonly summaryItems: Locator;
+  readonly itemNames: Locator;
   readonly itemPrices: Locator;
   readonly subtotalLabel: Locator;
   readonly taxLabel: Locator;
@@ -13,6 +14,7 @@ export class CheckoutSummaryPage {
   constructor(page: Page) {
     this.page = page;
     this.summaryItems = page.getByTestId('inventory-item');
+    this.itemNames = page.getByTestId('inventory-item-name');
     this.itemPrices = page.getByTestId('inventory-item-price');
     this.subtotalLabel = page.getByTestId('subtotal-label');
     this.taxLabel = page.getByTestId('tax-label');
@@ -42,7 +44,7 @@ export class CheckoutSummaryPage {
     await this.finishButton.click();
   }
 
-    async cancel(): Promise<void> {
+  async cancel(): Promise<void> {
     await this.cancelButton.click();
   }
 
