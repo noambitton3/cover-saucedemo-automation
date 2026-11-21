@@ -71,7 +71,7 @@ test.describe('Checkout', () => {
     await checkoutInfoPage.cancel();
 
     await expect(cartPage.pageTitle).toHaveText('Your Cart');
-    await expect.soft(cartPage.cartItemNames).toHaveText([products.backpack]);
+    await expect(cartPage.cartItemNames).toHaveText([products.backpack]);
   });
 
   test('summary calculates totals correctly', { tag: '@regression' }, async ({ inventoryPage, cartPage, checkoutInfoPage, checkoutSummaryPage }) => {
@@ -92,5 +92,20 @@ test.describe('Checkout', () => {
 
     expect.soft(subtotal).toBeCloseTo(pricesSum, 2);
     expect.soft(total).toBeCloseTo(subtotal + tax, 2);
+  });
+
+  test('cancel on summary returns to products page and keeps the cart', { tag: '@regression' }, async ({ inventoryPage, cartPage, checkoutInfoPage, checkoutSummaryPage }) => {
+    await inventoryPage.addToCart(products.backpack);
+    await inventoryPage.header.goToCart();
+    await expect(cartPage.pageTitle).toHaveText('Your Cart');
+    await cartPage.goToCheckout();
+    await checkoutInfoPage.fillForm(checkoutInfo);
+    await checkoutInfoPage.clickContinue();
+    await expect(checkoutSummaryPage.finishButton).toBeVisible();
+
+    await checkoutSummaryPage.cancel();
+
+    await expect(inventoryPage.title).toHaveText('Products');
+    await expect(inventoryPage.header.cartBadge).toHaveText('1');
   });
 });
