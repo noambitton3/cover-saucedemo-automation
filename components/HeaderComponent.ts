@@ -27,6 +27,10 @@ export class HeaderComponent {
     await this.menuButton.click();
   }
 
+  async closeMenu(): Promise<void> {
+    await this.closeMenuButton.click();
+  }
+
   async logout(): Promise<void> {
     await this.openMenu();
     await this.logoutLink.click();
