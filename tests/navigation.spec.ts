@@ -22,6 +22,25 @@ test.describe('Navigation', () => {
       await expect(loginPage.errorMessage).toHaveText(ErrorMessages.protectedPage('/inventory.html'));
     });
   });
+
+  test('menu opens with all links and closes with X', { tag: '@regression' }, async ({ inventoryPage }) => {
+    const header = inventoryPage.header;
+
+    await test.step('menu opens and shows all links', async () => {
+      await header.openMenu();
+
+      await expect(header.sideMenu).toHaveAttribute('aria-hidden', 'false');
+      await expect.soft(header.allItemsLink).toHaveText('All Items');
+      await expect.soft(header.aboutLink).toHaveText('About');
+      await expect.soft(header.logoutLink).toHaveText('Logout');
+      await expect.soft(header.resetAppStateLink).toHaveText('Reset App State');
+    });
+
+    await test.step('X closes the menu', async () => {
+      await header.closeMenu();
+      await expect(header.sideMenu).toHaveAttribute('aria-hidden', 'true');
+    });
+  });
 });
 
 test.describe('Navigation - not logged in', () => {
