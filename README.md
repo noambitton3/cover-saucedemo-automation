@@ -209,3 +209,7 @@ Values are loaded in this order:
 - Log in once and reuse the session (`storageState`) to shorten the test runs.
 - Automate more of the bugs documented in the [Test Plan](TEST_PLAN.md). Today 2 of the 16 bugs are covered with `test.fail()`.
 - Cover `visual_user` and `error_user` with dedicated tests.
+
+---
+
+<sub>* AI tools were used as a coding assistant during development. All code was reviewed, run and verified by me.</sub>
