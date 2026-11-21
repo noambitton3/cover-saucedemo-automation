@@ -46,7 +46,7 @@ export class HeaderComponent {
     }).toPass();
   }
 
-/** Closes the side menu with X and makes sure its links are no longer visible. Retries like openMenu. */
+  /** Closes the side menu with X and makes sure its links are no longer visible. Retries like openMenu. */
   async closeMenu(): Promise<void> {
     await expect(async () => {
       if (await this.allItemsLink.isVisible()) {
